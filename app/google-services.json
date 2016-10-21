@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "291491021933",
+    "firebase_url": "https://shaftquack-2ee44.firebaseio.com",
+    "project_id": "shaftquack-2ee44",
+    "storage_bucket": "shaftquack-2ee44.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:291491021933:android:7c9b026db19cae3f",
+        "android_client_info": {
+          "package_name": "com.shaftware.shaftquack"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "291491021933-5ut7mabmmasi0gpj72q3olum04po5650.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shaftware.shaftquack",
+            "certificate_hash": "EC5CF046901D2C7B6E3CB01B857027DDF93637DD"
+          }
+        },
+        {
+          "client_id": "291491021933-bucaak1nab6vf5ucof53tm6leep7tqhp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAl-clCRsikh13Khm1HucxnNq92j6XILcc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "291491021933-bucaak1nab6vf5ucof53tm6leep7tqhp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
