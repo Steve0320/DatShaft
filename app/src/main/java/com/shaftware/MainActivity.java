@@ -84,7 +84,6 @@ public class MainActivity extends AppCompatActivity
     //and return to the sign in page (user may perform no further actions
     //until signed in again.
     public void handleLogout(View v) {
-        Log.d(TAG, "Clicky clicky mothafukka");
         mFirebaseAuth.signOut();
         Auth.GoogleSignInApi.signOut(mGoogleApiClient);
         mUsername = ANONYMOUS;
