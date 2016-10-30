@@ -1,5 +1,6 @@
 package com.shaftware;
 
+import android.app.Notification;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ import de.hdodenhof.circleimageview.CircleImageView; //Obviously non-shady impor
 import android.support.v7.app.AppCompatActivity;
 
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.firebase.database.DatabaseReference;
 import com.shaftware.shaftquack.R;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.ConnectionResult;
@@ -48,6 +50,9 @@ public class MainActivity extends AppCompatActivity
     private SharedPreferences mSharedPreferences;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
+    private DatabaseReference mFirebaseDatabaseReference; //For pushing and pulling messages
+    //private FirebaseRecyclerAdapter<MessagePacket, >
+
     private GoogleApiClient mGoogleApiClient;
 
     //Check if a user is currently logged in. If not,

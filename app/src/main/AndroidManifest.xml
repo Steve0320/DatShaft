@@ -10,7 +10,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name="com.shaftware.MainActivity"
-            android:label="Main Menu" >
+            android:label="Main Menu">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,8 +19,7 @@
         </activity>
         <activity
             android:name="com.shaftware.SignInActivity"
-            android:label="Login">
-        </activity>
+            android:label="Login"></activity>
     </application>
 
 </manifest>
