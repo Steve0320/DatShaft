@@ -48,7 +48,7 @@ import java.io.PrintWriter;
 import java.util.concurrent.TimeUnit;
 
 public class SignInActivity extends AppCompatActivity
-    implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
+        implements GoogleApiClient.OnConnectionFailedListener {
 
     private static final String TAG = "SignInActivity";
     private static final int RC_SIGN_IN = 9001;
@@ -59,6 +59,7 @@ public class SignInActivity extends AppCompatActivity
     private SignInButton mSignInButton;
     private GoogleApiClient mGoogleApiClient;
 
+    //Startup code to run on creation of SignInActivity
     protected void onCreate(Bundle savedInstanceState) {
 
         mFirebaseAuth = FirebaseAuth.getInstance();
@@ -66,8 +67,8 @@ public class SignInActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
-        mSignInButton = (SignInButton) findViewById(R.id.sign_in_button);
-        mSignInButton.setOnClickListener(this);
+        //mSignInButton = (SignInButton) findViewById(R.id.sign_in_button);
+        //mSignInButton.setOnClickListener(this);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -80,16 +81,7 @@ public class SignInActivity extends AppCompatActivity
 
     }
 
-    //TODO: Refactor into XML method
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.sign_in_button:
-                signIn();
-                break;
-        }
-    }
-
+    //Dispatch events based on the result of sign in activity
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -106,6 +98,7 @@ public class SignInActivity extends AppCompatActivity
 
     }
 
+    //Take the given account and authenticate with Firebase servers
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
@@ -126,11 +119,14 @@ public class SignInActivity extends AppCompatActivity
         });
     }
 
-    private void signIn() {
+    //Sign in to a google account
+    public void handleSignIn(View v) {
+        Log.d(TAG, "Firing sign in event");
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
+    //Handle a failed connection to the Google API
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         // An unresolvable error has occurred and Google APIs (including Sign-In) will not

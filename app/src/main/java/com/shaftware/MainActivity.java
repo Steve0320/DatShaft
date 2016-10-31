@@ -47,12 +47,12 @@ public class MainActivity extends AppCompatActivity
     private final String ANONYMOUS = "anonymous";
     private String mUsername;
 
+    //Google and Firebase Resourses
     private SharedPreferences mSharedPreferences;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
     private DatabaseReference mFirebaseDatabaseReference; //For pushing and pulling messages
     //private FirebaseRecyclerAdapter<MessagePacket, >
-
     private GoogleApiClient mGoogleApiClient;
 
     //Check if a user is currently logged in. If not,
