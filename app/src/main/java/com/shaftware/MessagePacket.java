@@ -14,6 +14,9 @@ public class MessagePacket {
     private String photoURL;
     private String timestamp;
 
+    //Do not delete, Firebase needs this
+    public MessagePacket() {}
+
     public MessagePacket(String text, String name, String photoURL, String timestamp) {
         this.text = text;
         this.name = name;

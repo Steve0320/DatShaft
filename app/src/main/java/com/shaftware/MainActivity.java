@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import android.text.Editable;
@@ -28,9 +30,14 @@ import android.widget.Toast;
 import de.hdodenhof.circleimageview.CircleImageView; //Obviously non-shady import ^.^
 import android.support.v7.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide; //Image handling library
+
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.FirebaseDatabase;
+import com.shaftware.shaftquack.R;
+
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.database.DatabaseReference;
-import com.shaftware.shaftquack.R;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -45,14 +52,18 @@ public class MainActivity extends AppCompatActivity
 
     private final String TAG = "MainActivity";
     private final String ANONYMOUS = "anonymous";
+    private static final String MESSAGES_CHILD = "messages";
+
     private String mUsername;
 
     //Google and Firebase Resourses
     private SharedPreferences mSharedPreferences;
+    private LinearLayoutManager mLinearLayoutManager;
+    private RecyclerView mMessageRecyclerView;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
     private DatabaseReference mFirebaseDatabaseReference; //For pushing and pulling messages
-    //private FirebaseRecyclerAdapter<MessagePacket, >
+    private FirebaseRecyclerAdapter<MessagePacket, MessageView> mFirebaseAdapter; //Bridge for sync
     private GoogleApiClient mGoogleApiClient;
 
     //Check if a user is currently logged in. If not,
@@ -82,6 +93,54 @@ public class MainActivity extends AppCompatActivity
                 .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API)
                 .build();
+
+        //Setup database synchronization
+        mMessageRecyclerView = (RecyclerView) findViewById(R.id.messageRecyclerView);
+        mLinearLayoutManager = new LinearLayoutManager(this);
+        mLinearLayoutManager.setStackFromEnd(true);
+        mMessageRecyclerView.setLayoutManager(mLinearLayoutManager);
+
+        mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
+        mFirebaseAdapter = new FirebaseRecyclerAdapter<MessagePacket, MessageView>(
+                MessagePacket.class, R.layout.item_message, MessageView.class,
+                mFirebaseDatabaseReference.child(MESSAGES_CHILD)
+        ) {
+            @Override
+            protected void populateViewHolder(MessageView viewHolder, MessagePacket model, int position) {
+                Log.d(TAG, "Populating view holder");
+                viewHolder.messageTextView.setText(model.getText());
+                viewHolder.nameTextView.setText(model.getName());
+
+                if (model.getPhotoURL() == null) {
+                    viewHolder.profileImageView.setImageDrawable
+                            (ContextCompat.getDrawable(MainActivity.this,
+                            R.drawable.ic_account_circle_black_36dp));
+                }
+                else {
+                    Glide.with(MainActivity.this).load(model.getPhotoURL())
+                            .into(viewHolder.profileImageView);
+                }
+
+            }
+        };
+
+        mFirebaseAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                int messageCount = mFirebaseAdapter.getItemCount();
+                int lastVisiblePosition = mLinearLayoutManager
+                        .findLastCompletelyVisibleItemPosition();
+                if (lastVisiblePosition == -1
+                        || (positionStart >= (messageCount - 1)
+                        && lastVisiblePosition == (positionStart - 1))) {
+                    mMessageRecyclerView.scrollToPosition(positionStart);
+                }
+            }
+        });
+
+        mMessageRecyclerView.setLayoutManager(mLinearLayoutManager);
+        mMessageRecyclerView.setAdapter(mFirebaseAdapter);
 
     }
 
