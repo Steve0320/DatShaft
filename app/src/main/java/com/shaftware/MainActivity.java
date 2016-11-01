@@ -121,6 +121,13 @@ public class MainActivity extends AppCompatActivity
                             .into(viewHolder.profileImageView);
                 }
 
+                if (model.getTimestamp() == null) {
+                    viewHolder.timestamp.setText("Timestamp not found");
+                }
+                else {
+                    viewHolder.timestamp.setText(model.getTimestamp());
+                }
+
             }
         };
 
