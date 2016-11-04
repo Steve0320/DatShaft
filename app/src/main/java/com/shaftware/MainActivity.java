@@ -44,6 +44,10 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.shaftware.shaftquack.R;
 
@@ -55,6 +59,7 @@ public class MainActivity extends AppCompatActivity
     private static final String MESSAGES_CHILD = "messages";
 
     private String mUsername;
+    private String mPhotoURL;
 
     //Google and Firebase Resourses
     private SharedPreferences mSharedPreferences;
@@ -87,6 +92,7 @@ public class MainActivity extends AppCompatActivity
         else {
             Log.d(TAG, "Got user" + mUsername);
             mUsername = mFirebaseUser.getDisplayName();
+            mPhotoURL = mFirebaseUser.getPhotoUrl().toString();
         }
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -160,6 +166,20 @@ public class MainActivity extends AppCompatActivity
         mUsername = ANONYMOUS;
         startActivity(new Intent(this, SignInActivity.class));
         return;
+    }
+
+    public void handleSend(View v) {
+        EditText messageBox = (EditText) findViewById(R.id.messageBox);
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy, HH:mm");
+        String date = df.format(Calendar.getInstance().getTime());
+
+        MessagePacket message = new MessagePacket(
+                messageBox.getText().toString(),
+                mUsername, mPhotoURL, date);
+
+        mFirebaseDatabaseReference.child(MESSAGES_CHILD).push().setValue(message);
+        messageBox.setText("");
+
     }
 
     //Handle a failed connection to Google servers
