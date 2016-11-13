@@ -10,7 +10,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name="com.shaftware.MainActivity"
-            android:label="Main Menu">
+            android:label="ShaftQuack">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
