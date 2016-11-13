@@ -24,11 +24,20 @@
         android:layout_alignParentBottom="true"
         android:paddingTop="5dp" >
 
-        <TextView
-            android:text="You ready to get shafted?\n\t--Team Shaftware"
+        <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView"
+            android:inputType="textAutoComplete"
+            android:ems="10"
+            android:id="@+id/messageBox"
+            android:layout_weight="1" />
+
+        <Button
+            android:text="Send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/sendButton"
+            android:onClick="handleSend"
             android:layout_weight="1" />
 
     </LinearLayout>

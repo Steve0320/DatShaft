@@ -95,7 +95,6 @@ public class SignInActivity extends AppCompatActivity
                 Log.e(TAG, "Google Sign In Failed.");
             }
         }
-
     }
 
     //Take the given account and authenticate with Firebase servers

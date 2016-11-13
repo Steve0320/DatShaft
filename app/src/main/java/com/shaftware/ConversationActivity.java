@@ -47,52 +47,33 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.shaftware.shaftquack.R;
 
-public class ConversationActivity extends AppCompatActivity
-        implements GoogleApiClient.OnConnectionFailedListener {
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+public class ConversationActivity extends AppCompatActivity {
 
     private final String TAG = "ConversationActivity";
-    private final String ANONYMOUS = "anonymous";
     private static final String MESSAGES_CHILD = "messages";
 
-    private String mUsername;
-
-    //Google and Firebase Resourses
-    private SharedPreferences mSharedPreferences;
-    private LinearLayoutManager mLinearLayoutManager;
-    private RecyclerView mMessageRecyclerView;
+    // Google and Firebase Resources
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
+    private LinearLayoutManager mLinearLayoutManager;
+    private RecyclerView mMessageRecyclerView;
     private DatabaseReference mFirebaseDatabaseReference; //For pushing and pulling messages
     private FirebaseRecyclerAdapter<MessagePacket, MessageView> mFirebaseAdapter; //Bridge for sync
-    private GoogleApiClient mGoogleApiClient;
 
-    //Check if a user is currently logged in. If not,
-    //transfer control to login screen.
+    // User info
+    private String mUsername;
+    private String mPhotoURL;
+
+    // Displays the conversation from the firebase server
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conversation);
-
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        mUsername = ANONYMOUS;
-
-        mFirebaseAuth = FirebaseAuth.getInstance();
-        mFirebaseUser = mFirebaseAuth.getCurrentUser();
-        if (mFirebaseUser == null) {
-            startActivity(new Intent(this, SignInActivity.class));
-            finish();
-            return;
-        }
-        else {
-            Log.d(TAG, "Got user" + mUsername);
-            mUsername = mFirebaseUser.getDisplayName();
-        }
-
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
-                .addApi(Auth.GOOGLE_SIGN_IN_API)
-                .build();
 
         //Setup database synchronization
         mMessageRecyclerView = (RecyclerView) findViewById(R.id.messageRecyclerView);
@@ -127,7 +108,6 @@ public class ConversationActivity extends AppCompatActivity
                 else {
                     viewHolder.timestamp.setText(model.getTimestamp());
                 }
-
             }
         };
 
@@ -150,21 +130,20 @@ public class ConversationActivity extends AppCompatActivity
         mMessageRecyclerView.setAdapter(mFirebaseAdapter);
     }
 
-    //Action listener for logout button. Log the user out of the system
-    //and return to the sign in page (user may perform no further actions
-    //until signed in again.
-    public void handleLogout(View v) {
-        mFirebaseAuth.signOut();
-        Auth.GoogleSignInApi.signOut(mGoogleApiClient);
-        mUsername = ANONYMOUS;
-        startActivity(new Intent(this, SignInActivity.class));
-        return;
-    }
+    public void handleSend(View v) {
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseUser = mFirebaseAuth.getCurrentUser();
+        mUsername = mFirebaseUser.getDisplayName();
+        mPhotoURL = mFirebaseUser.getPhotoUrl().toString();
+        EditText messageBox = (EditText) findViewById(R.id.messageBox);
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy, HH:mm");
+        String date = df.format(Calendar.getInstance().getTime());
 
-    //Handle a failed connection to Google servers
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Log.d(TAG, "onConnectionFailed:" + connectionResult);
-        Toast.makeText(this, "Google Play Services error", Toast.LENGTH_SHORT).show();
+        MessagePacket message = new MessagePacket(
+                messageBox.getText().toString(),
+                mUsername, mPhotoURL, date);
+
+        mFirebaseDatabaseReference.child(MESSAGES_CHILD).push().setValue(message);
+        messageBox.setText("");
     }
 }
