@@ -1,33 +1,14 @@
 package com.shaftware;
 
-import android.app.Notification;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.app.Activity;
 
-import android.os.Bundle;
-import android.app.Activity;
-import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import android.text.Editable;
-import android.text.InputFilter;
-import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
-import de.hdodenhof.circleimageview.CircleImageView; //Obviously non-shady import ^.^
 import android.support.v7.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide; //Image handling library
@@ -36,15 +17,10 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.FirebaseDatabase;
 import com.shaftware.shaftquack.R;
 
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.database.DatabaseReference;
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.shaftware.shaftquack.R;
 
 import java.text.DateFormat;
@@ -54,7 +30,7 @@ import java.util.Calendar;
 public class ConversationActivity extends AppCompatActivity {
 
     private final String TAG = "ConversationActivity";
-    private static final String MESSAGES_CHILD = "messages";
+    private static final String MESSAGES_CHILD = "messages/test";
 
     // Google and Firebase Resources
     private FirebaseAuth mFirebaseAuth;
