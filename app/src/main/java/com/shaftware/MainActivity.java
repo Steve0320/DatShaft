@@ -50,9 +50,9 @@ public class MainActivity extends AppCompatActivity
             finish();
             return;
         } else {
-            Log.d(TAG, "Got user" + mUsername);
             mUsername = mFirebaseUser.getDisplayName();
             mPhotoURL = mFirebaseUser.getPhotoUrl().toString();
+            Log.d(TAG, "Got user " + mUsername);
         }
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -81,7 +81,15 @@ public class MainActivity extends AppCompatActivity
 
     // Called when the user clicks the Demo Button
     public void toDemo(View view) {
-        startActivity(new Intent(MainActivity.this, ConversationActivity.class));
+        Intent intent = new Intent(MainActivity.this, ConversationActivity.class);
+        intent.putExtra("ROOM_ID", "test");
+        intent.putExtra("ROOM_NAME", "Demo");
+        startActivity(intent);
+    }
+
+    // Called when the user clicks the Channels Button
+    public void toChannels(View view) {
+        startActivity(new Intent(MainActivity.this, ChannelsActivity.class));
     }
 
 } // end MainActivity

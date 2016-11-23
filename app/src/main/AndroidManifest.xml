@@ -13,14 +13,19 @@
             android:label="ShaftQuack">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name="com.shaftware.SignInActivity"
             android:label="Login" />
-        <activity android:name="com.shaftware.ConversationActivity"
-            android:label="Display Chat">
+        <activity
+            android:name="com.shaftware.ConversationActivity"
+            android:label="Display Chat"></activity>
+        <activity
+            android:name="com.shaftware.ChannelsActivity"
+            android:label="Channels">
         </activity>
     </application>
 

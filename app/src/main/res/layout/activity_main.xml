@@ -21,11 +21,12 @@
         android:layout_height="wrap_content">
 
         <Button
-            android:text="NEW CHAT"
+            android:text="Channels"
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:id="@+id/button1"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:onClick="toChannels"/>
 
         <Button
             android:text="PRIVATE"

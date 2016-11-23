@@ -30,7 +30,8 @@ import java.util.Calendar;
 public class ConversationActivity extends AppCompatActivity {
 
     private final String TAG = "ConversationActivity";
-    private static final String MESSAGES_CHILD = "messages/test";
+    private String MESSAGES_CHILD = "messages/";
+    private String roomName;
 
     // Google and Firebase Resources
     private FirebaseAuth mFirebaseAuth;
@@ -51,7 +52,11 @@ public class ConversationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conversation);
 
+        MESSAGES_CHILD = MESSAGES_CHILD + getIntent().getStringExtra("ROOM_ID");
+        roomName = getIntent().getStringExtra("ROOM_NAME");
+
         //Setup database synchronization
+        setTitle(roomName);
         mMessageRecyclerView = (RecyclerView) findViewById(R.id.messageRecyclerView);
         mLinearLayoutManager = new LinearLayoutManager(this);
         mLinearLayoutManager.setStackFromEnd(true);
