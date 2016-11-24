@@ -92,7 +92,7 @@ public class ConversationActivity extends AppCompatActivity {
             }
         };
 
-        mFirebaseAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+        mFirebaseAdapter.registerAdapterDataObserver(  new RecyclerView.AdapterDataObserver() {
             @Override
             public void onItemRangeInserted(int positionStart, int itemCount) {
                 super.onItemRangeInserted(positionStart, itemCount);

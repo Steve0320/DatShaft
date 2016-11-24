@@ -42,7 +42,8 @@
             android:layout_height="50dp"
             android:layout_marginTop="28dp"
             android:id="@+id/button3"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:onClick="handleAccountSettings"/>
 
         <Button
             android:text="APP SETTINGS"
