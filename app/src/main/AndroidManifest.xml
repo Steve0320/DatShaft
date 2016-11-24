@@ -25,8 +25,8 @@
             android:label="Display Chat"></activity>
         <activity
             android:name="com.shaftware.ChannelsActivity"
-            android:label="Channels">
-        </activity>
+            android:label="Channels"></activity>
+        <activity android:name="com.shaftware.SettingsActivity"></activity>
     </application>
 
 </manifest>
