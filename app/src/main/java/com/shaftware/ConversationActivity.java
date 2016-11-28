@@ -1,5 +1,6 @@
 package com.shaftware;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import android.support.v4.content.ContextCompat;
@@ -40,14 +41,14 @@ public class ConversationActivity extends AppCompatActivity {
     private RecyclerView mMessageRecyclerView;
     private DatabaseReference mFirebaseDatabaseReference; //For pushing and pulling messages
     private FirebaseRecyclerAdapter<MessagePacket, MessageView> mFirebaseAdapter; //Bridge for sync
-
     // User info
     private String mUsername;
     private String mPhotoURL;
-
+    private  MediaPlayer mp;
     // Displays the conversation from the firebase server
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mp = MediaPlayer.create(this, R.raw.quack);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conversation);
@@ -117,14 +118,17 @@ public class ConversationActivity extends AppCompatActivity {
         mUsername = mFirebaseUser.getDisplayName();
         mPhotoURL = mFirebaseUser.getPhotoUrl().toString();
         EditText messageBox = (EditText) findViewById(R.id.messageBox);
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy, HH:mm");
-        String date = df.format(Calendar.getInstance().getTime());
+        if(!messageBox.getText().toString().equals("")) {
+            mp.start();
+            DateFormat df = new SimpleDateFormat("dd/MM/yyyy, HH:mm");
+            String date = df.format(Calendar.getInstance().getTime());
 
-        MessagePacket message = new MessagePacket(
-                messageBox.getText().toString(),
-                mUsername, mPhotoURL, date);
+            MessagePacket message = new MessagePacket(
+                    messageBox.getText().toString(),
+                    mUsername, mPhotoURL, date);
 
-        mFirebaseDatabaseReference.child(MESSAGES_CHILD).push().setValue(message);
-        messageBox.setText("");
+            mFirebaseDatabaseReference.child(MESSAGES_CHILD).push().setValue(message);
+            messageBox.setText("");
+        }
     }
 }
