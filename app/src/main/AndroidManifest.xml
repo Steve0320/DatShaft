@@ -11,22 +11,33 @@
         <activity
             android:name="com.shaftware.MainActivity"
             android:label="ShaftQuack">
+            <!--
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            -->
         </activity>
         <activity
             android:name="com.shaftware.SignInActivity"
             android:label="Login" />
         <activity
             android:name="com.shaftware.ConversationActivity"
-            android:label="Display Chat"></activity>
+            android:label="Display Chat" />
         <activity
             android:name="com.shaftware.ChannelsActivity"
-            android:label="Channels"></activity>
-        <activity android:name="com.shaftware.SettingsActivity"></activity>
+            android:label="Channels" />
+        <activity android:name="com.shaftware.SettingsActivity" />
+        <activity
+            android:name="com.shaftware.SplashScreen"
+            android:label="Shafting in Progress">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
