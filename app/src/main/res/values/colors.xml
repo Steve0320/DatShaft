@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">@color/shaftMainColorLight</color>
+    <color name="colorPrimaryDark">@color/shaftMainColor</color>
+    <color name="colorAccent">@color/shaftAccentColorLight</color>
+
+    <color name="shaftMainColor">#ff8533</color>
+    <color name="shaftMainColorDark">#cc6a28</color>
+    <color name="shaftMainColorLight">#ffa86d</color>
+    <color name="ShaftTextColor">#ffe0cc</color>
+    <color name="shaftAccentColor">#f3b43c</color>
+    <color name="shaftAccentColorDark">#c08d2e</color>
+    <color name="shaftAccentColorLight">#f3c774</color>
+    <color name="shaftBGColor">#f5f5dc</color>
 </resources>

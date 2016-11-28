@@ -3,8 +3,10 @@ package com.shaftware;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.ButtonBarLayout;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -28,7 +30,6 @@ public class ChannelsActivity extends AppCompatActivity {
     private FirebaseUser mFirebaseUser;
     private ArrayList<String> roomIds;
     private ArrayList<String> roomNames;
-    private ScrollView scrollView;
     private LinearLayout linearLayout;
 
     @Override
@@ -36,18 +37,7 @@ public class ChannelsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_channels);
 
-
-
-        scrollView = (ScrollView) findViewById(R.id.scrollView1);
-        linearLayout = new LinearLayout(this);
-        linearLayout.setOrientation(LinearLayout.VERTICAL);
-
-        Button button = new Button(this);
-        button.setText("Some text");
-        linearLayout.addView(button);
-
-
-        scrollView.addView(linearLayout);
+        linearLayout = (LinearLayout) findViewById(R.id.channelLayout);
     }
 
     @Override
@@ -70,8 +60,12 @@ public class ChannelsActivity extends AppCompatActivity {
 
 
                 Button button;
+                float d = getBaseContext().getResources().getDisplayMetrics().density;
                 for(int i = 0; i < roomNames.size(); i++) {
-                    button = new Button(ChannelsActivity.this);
+                    button = (Button)getLayoutInflater().inflate(R.layout.shaft_button_template, null);
+                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams((int)(300*d), (int)(50*d)); // width and height
+                    lp.setMargins(0,(int)(14*d),0,(int)(14*d)); // space each item
+                    button.setLayoutParams(lp);
                     button.setText(roomNames.get(i));
                     button.setTag(roomIds.get(i));
                     button.setOnClickListener(getOnClickListener(button));
@@ -103,6 +97,4 @@ public class ChannelsActivity extends AppCompatActivity {
             }
         };
     }
-
-
 }

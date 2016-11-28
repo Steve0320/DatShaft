@@ -9,6 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/shaftBGColor"
     tools:context="com.shaftware.MainActivity">
 
     <!-- Buttons to navigate to other pages -->
@@ -16,60 +17,43 @@
         android:id="@+id/mainLayout"
         android:orientation="vertical"
         android:gravity="center_horizontal"
-        android:layout_centerVertical="true"
+        android:layout_centerVertical="false"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <Button
-            android:text="Channels"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
+            android:text="CHANNELS"
+            style="@style/shaftButton"
             android:id="@+id/button1"
-            android:layout_weight="1"
             android:onClick="toChannels"/>
 
         <Button
             android:text="PRIVATE"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="28dp"
-            android:id="@+id/button2"
-            android:layout_weight="1" />
+            style="@style/shaftButton"
+            android:id="@+id/button2" />
 
         <Button
             android:text="ACT SETTINGS"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="28dp"
+            style="@style/shaftButton"
             android:id="@+id/button3"
-            android:layout_weight="1"
             android:onClick="handleAccountSettings"/>
 
         <Button
             android:text="APP SETTINGS"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="28dp"
-            android:id="@+id/button4"
-            android:layout_weight="1" />
+            style="@style/shaftButton"
+            android:id="@+id/button4" />
 
         <Button
             android:text="DEMO"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="28dp"
+            style="@style/shaftButton"
             android:id="@+id/button5"
-            android:layout_weight="1"
-            android:onClick="toDemo"/>
+            android:onClick="toDemo" />
 
         <Button
-            android:text="Logout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:text="LOGOUT"
+            style="@style/shaftButton"
             android:id="@+id/Logout"
-            android:layout_weight="1"
             android:onClick="handleLogout" />
-
 
     </LinearLayout>
 
