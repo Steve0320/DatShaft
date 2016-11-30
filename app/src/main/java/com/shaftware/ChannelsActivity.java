@@ -1,6 +1,7 @@
 package com.shaftware;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.ButtonBarLayout;
@@ -31,6 +32,7 @@ public class ChannelsActivity extends AppCompatActivity {
     private ArrayList<String> roomIds;
     private ArrayList<String> roomNames;
     private LinearLayout linearLayout;
+    //final MediaPlayer mp = MediaPlayer.create(this, R.raw.quack);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +92,7 @@ public class ChannelsActivity extends AppCompatActivity {
     private View.OnClickListener getOnClickListener(final Button button) {
         return new View.OnClickListener() {
             public void onClick(View v) {
+               // mp.start();
                 Intent intent = new Intent(ChannelsActivity.this, ConversationActivity.class);
                 intent.putExtra("ROOM_ID", (String) button.getTag());
                 intent.putExtra("ROOM_NAME", button.getText());

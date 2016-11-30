@@ -31,7 +31,7 @@
         <activity android:name="com.shaftware.SettingsActivity" />
         <activity
             android:name="com.shaftware.SplashScreen"
-            android:label="Shafting in Progress">
+            android:label="ShaftQuack">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

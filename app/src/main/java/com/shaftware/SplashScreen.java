@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.View;
@@ -27,20 +28,23 @@ public class SplashScreen extends Activity {
         imageView.setImageResource(R.mipmap.duck);
 
         Animation hyperspaceJumpAnimation = AnimationUtils.loadAnimation(this, R.anim.shaft_anim);
-        hyperspaceJumpAnimation.setDuration(1000);
+        hyperspaceJumpAnimation.setDuration(700);
 
         final SplashScreen x = this;
-
+        final MediaPlayer mp = MediaPlayer.create(this, R.raw.quack);
         hyperspaceJumpAnimation.setAnimationListener(new Animation.AnimationListener(){
 
             @Override
-            public void onAnimationStart(Animation animation){}
+            public void onAnimationStart(Animation animation){
+                mp.start();
+            }
 
             @Override
             public void onAnimationRepeat(Animation animation){}
 
             @Override
             public void onAnimationEnd(Animation animation){
+
                 imageView.setVisibility(View.GONE);
                 startActivity(new Intent(x, MainActivity.class));
             }
