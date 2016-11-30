@@ -88,6 +88,11 @@ public class MainActivity extends AppCompatActivity
         Toast.makeText(this, "Google Play Services error", Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void onBackPressed() {
+
+    }
+
     // Called when the user clicks the Demo Button
     public void toDemo(View view) {
         Intent intent = new Intent(MainActivity.this, ConversationActivity.class);

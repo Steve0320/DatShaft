@@ -16,11 +16,12 @@
         android:layout_marginTop="40dp" />
 
     <Button
-        android:text="Google Sign-in"
+        android:text="   Google Sign-in   "
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:id="@+id/buttonGoogleSignIn"
-        android:onClick="handleSignIn"/>
+        android:onClick="handleSignIn"
+        style="@style/shaftButton" />
 
 </FrameLayout>

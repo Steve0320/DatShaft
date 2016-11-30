@@ -1,5 +1,6 @@
 package com.shaftware;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 
@@ -11,11 +12,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide; //Image handling library
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.shaftware.shaftquack.R;
 
 import com.google.firebase.database.DatabaseReference;
@@ -40,11 +45,14 @@ public class ConversationActivity extends AppCompatActivity {
     private LinearLayoutManager mLinearLayoutManager;
     private RecyclerView mMessageRecyclerView;
     private DatabaseReference mFirebaseDatabaseReference; //For pushing and pulling messages
+    private DatabaseReference nameRef;
     private FirebaseRecyclerAdapter<MessagePacket, MessageView> mFirebaseAdapter; //Bridge for sync
+
     // User info
     private String mUsername;
     private String mPhotoURL;
     private  MediaPlayer mp;
+
     // Displays the conversation from the firebase server
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +72,7 @@ public class ConversationActivity extends AppCompatActivity {
         mMessageRecyclerView.setLayoutManager(mLinearLayoutManager);
 
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
+
         mFirebaseAdapter = new FirebaseRecyclerAdapter<MessagePacket, MessageView>(
                 MessagePacket.class, R.layout.item_message, MessageView.class,
                 mFirebaseDatabaseReference.child(MESSAGES_CHILD)
@@ -113,22 +122,58 @@ public class ConversationActivity extends AppCompatActivity {
     }
 
     public void handleSend(View v) {
+
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
-        mUsername = mFirebaseUser.getDisplayName();
+        //mUsername = mFirebaseUser.getDisplayName();
+        nameRef = FirebaseDatabase.getInstance().getReference().child("accounts").child(mFirebaseUser.getUid());
         mPhotoURL = mFirebaseUser.getPhotoUrl().toString();
-        EditText messageBox = (EditText) findViewById(R.id.messageBox);
-        if(!messageBox.getText().toString().equals("")) {
-            mp.start();
-            DateFormat df = new SimpleDateFormat("dd/MM/yyyy, HH:mm");
-            String date = df.format(Calendar.getInstance().getTime());
+        final EditText messageBox = (EditText) findViewById(R.id.messageBox);
 
-            MessagePacket message = new MessagePacket(
-                    messageBox.getText().toString(),
-                    mUsername, mPhotoURL, date);
+        if (messageBox.getText().toString().trim().length() > 0) {
+            ValueEventListener acctInfoListener = new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    //DataSnapshot s = dataSnapshot.getChildren().iterator().next();
 
-            mFirebaseDatabaseReference.child(MESSAGES_CHILD).push().setValue(message);
+                    if (dataSnapshot != null && dataSnapshot.hasChildren()) {
+                        if (messageBox.getText().toString().trim().length() > 0) {
+                            mUsername = dataSnapshot.getValue(AccountPacket.class).getHandle();
+                        }
+                    } else {
+                        mUsername = mFirebaseUser.getDisplayName();
+                    }
+
+                    mp.start();
+                    DateFormat df = new SimpleDateFormat("dd/MM/yyyy, HH:mm");
+                    String date = df.format(Calendar.getInstance().getTime());
+
+                    MessagePacket message = new MessagePacket(
+                            messageBox.getText().toString(),
+                            mUsername, mPhotoURL, date);
+
+                    mFirebaseDatabaseReference.child(MESSAGES_CHILD).push().setValue(message);
+                    messageBox.setText("");
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.w(TAG, "failed to get acct info");
+                    messageBox.setText("");
+                }
+            };
+
+            nameRef.addListenerForSingleValueEvent(acctInfoListener);
+        }
+
+        else {
             messageBox.setText("");
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this, MainActivity.class));
     }
 }

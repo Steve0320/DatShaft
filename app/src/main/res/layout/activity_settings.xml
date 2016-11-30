@@ -15,30 +15,37 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:id="@+id/unamelayout">
+        android:id="@+id/unamelayout"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <TextView
             android:text="Current Username: "
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/label_username"
-            android:layout_weight="1" />
+            android:layout_weight="0.68" />
 
-        <TextView
-            android:text="Unknown"
-            android:layout_width="match_parent"
+        <EditText
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:text="Unknown"
+            android:ems="10"
             android:id="@+id/text_username"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            />
 
     </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="56dp"
         android:layout_weight="1"
-        android:layout_below="@id/unamelayout">
+        android:layout_below="@id/unamelayout"
+        android:id="@+id/langlayout">
 
         <TextView
             android:text="Current Language:"
@@ -47,13 +54,40 @@
             android:id="@+id/label_language"
             android:layout_weight="1" />
 
-        <TextView
-            android:text="Unknown"
+        <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:text="Unknown"
+            android:ems="10"
             android:id="@+id/text_language"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:textIsSelectable="false"/>
 
     </LinearLayout>
+
+    <Button
+        android:text="   Modify Account Settings   "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonSettings"
+        android:layout_weight="1"
+        android:layout_below="@+id/langlayout"
+        style="@style/shaftButton"
+        android:onClick="onModifySettingsClick"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="   Enter information, then click here when finished   "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonSettingsEdit"
+        android:layout_weight="1"
+        android:layout_below="@+id/langlayout"
+        style="@style/shaftButton"
+        android:onClick="onCommitSettingsClick"
+        android:enabled="false"
+        android:visibility="invisible"
+        android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>
