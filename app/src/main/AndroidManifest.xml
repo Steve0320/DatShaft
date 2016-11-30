@@ -11,6 +11,7 @@
         <activity
             android:name="com.shaftware.MainActivity"
             android:label="ShaftQuack">
+
             <!--
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,13 +32,16 @@
         <activity android:name="com.shaftware.SettingsActivity" />
         <activity
             android:name="com.shaftware.SplashScreen"
-            android:label="ShaftQuack">
+            android:label="Shaft Quack">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.shaftware.AddChannelActivity"
+            android:label="Add Channel" />
     </application>
 
 </manifest>

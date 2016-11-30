@@ -28,9 +28,10 @@
             android:onClick="toChannels"/>
 
         <Button
-            android:text="PRIVATE"
+            android:text="ADD CHANNEL"
             style="@style/shaftButton"
-            android:id="@+id/button2" />
+            android:id="@+id/button2"
+            android:onClick="toAddChannels"/>
 
         <Button
             android:text="ACT SETTINGS"
