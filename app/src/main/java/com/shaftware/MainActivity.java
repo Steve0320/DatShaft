@@ -101,4 +101,7 @@ public class MainActivity extends AppCompatActivity
         startActivity(new Intent(MainActivity.this, ChannelsActivity.class));
     }
 
+    public void toAddChannels(View view) {
+        startActivity(new Intent(MainActivity.this, AddChannelActivity.class));
+    }
 } // end MainActivity
